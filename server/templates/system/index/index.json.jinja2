@@ -1,0 +1,175 @@
+{% extends "common/app.html.jinja2" %}
+
+{# 标题 #}
+{% block title %}登录 & 注册{% endblock %}
+
+
+{% block amis_config %}
+{
+    "type": "app",
+    "brandName": "简单ERP管理系统",
+    "logo":"/static/logo.png",
+    "header": {
+        "type": "flex",
+        "className": "w-full",
+        "justify": "flex-end",
+        "alignItems": "flex-end",
+        "items": [
+            {# {
+                "type": "tpl",
+                "tpl": "<div class=\"flex justify-between\"><div><\/div><div><a href=\"https://github.com/amisadmin/fastapi_amis_admin\" target=\"_blank\" title=\"Copyright\"><i class=\"fa fa-github fa-2x\"><\/i><\/a><\/div><\/div>",
+                "className": "w-full"
+            }, #}
+            {
+                "type": "dropdown-button",
+                "label": "admin",
+                "icon": "fa fa-user",
+                "trigger": "hover",
+                "buttons": [
+                    {
+                        "type": "button",
+                        "actionType": "dialog",
+                        "label": "用户信息",
+                        "dialog": {
+                            "type": "dialog",
+                            "body": {
+                                "type": "service",
+                                "schemaApi": {
+                                    "url": "/api/user/userinfo",
+                                    "method": "post",
+                                    "cache": 600000,
+                                    "responseData": {
+                                        "&": "${body}"
+                                    }
+                                }
+                            },
+                            "size": "lg",
+                            "title": "用户信息",
+                            "actions": []
+                        }
+                    },
+                    {
+                        "type": "button",
+                        "actionType": "url",
+                        "label": "退出登录",
+                        "url": "/api/auth/logout"
+                    }
+                ]
+            }
+        ]
+    },
+    {# "footer": "<div class=\"p-2 text-center bg-light\">Copyright © 2023  <a href=\"https://aisuda.bce.baidu.com/amis/docs\" target=\"_blank\" class=\"link-secondary\">Amis<\/a>. All rights reserved. <a target=\"_blank\" href=\"https://github.com/baidu/amis\" class=\"link-secondary\" rel=\"noopener\">v3.4.0<\/a><\/div> ", #}
+    "pages": [
+        {
+
+            "children": [
+                {
+                    "label": "首页",
+                    "icon": "fa fa-home",
+                    "url": "/admin/page/home",
+                    "schemaApi": {
+                        "url": "/admin/page/home",
+                        "method": "post",
+                        "data": {},
+                        "cache": 300000
+                    },
+                    "isDefaultPage": "True",
+                    "sort": 100
+                },
+                {
+                    "label": "系统管理",
+                    "icon": "fa fa-lock",
+                    "url": "/admin/auth/",
+                    "children": [
+                        {
+                            "label": "用户管理",
+                            "icon": "fa fa-user",
+                            "url": "/admin/auth/useradmin",
+                            "replace": false,
+                            "schemaApi": {
+                                "url": "/admin/auth/useradmin",
+                                "method": "post",
+                                "data": {},
+                                "cache": 300000
+                            }
+                        },
+                        {
+                            "label": "角色管理",
+                            "icon": "fa fa-group",
+                            "url": "/api/user/roleadmin",
+                            "schemaApi": {
+                                "url": "/admin/auth/roleadmin",
+                                "method": "post",
+                                "data": {},
+                                "cache": 300000
+                            }
+                        },
+                        {
+                            "label": "用户组管理",
+                            "icon": "fa fa-group",
+                            "url": "/admin/auth/groupadmin",
+                            "schemaApi": {
+                                "url": "/admin/auth/groupadmin",
+                                "method": "post",
+                                "data": {},
+                                "cache": 300000
+                            }
+                        },
+                        {
+                            "label": "权限管理",
+                            "icon": "fa fa-lock",
+                            "url": "/admin/auth/permissionadmin",
+                            "schemaApi": {
+                                "url": "/admin/auth/permissionadmin",
+                                "method": "post",
+                                "data": {},
+                                "cache": 300000
+                            }
+                        }
+                    ],
+                    "sort": 99
+                },
+                {
+                    "label": "APIDocs",
+                    "icon": "fa fa-book",
+                    "children": [
+                        {
+                            "label": "AdminDocs",
+                            "icon": "fa fa-book",
+                            "url": "/admin/docs",
+                            "schema": {
+                                "type": "iframe",
+                                "src": "/admin/docs"
+                            }
+                        },
+                        {
+                            "label": "AdminRedocs",
+                            "icon": "fa fa-book",
+                            "url": "/admin/redoc",
+                            "schema": {
+                                "type": "iframe",
+                                "src": "/admin/redoc"
+                            }
+                        }
+                    ],
+                    "sort": -100
+                },
+                {
+                    "label": "AmisEditorDemo",
+                    "icon": "fa fa-edit",
+                    "url": "//aisuda.github.io/amis-editor-demo/",
+                    "schema": {
+                        "type": "iframe",
+                        "src": "https://aisuda.github.io/amis-editor-demo/"
+                    },
+                    "sort": -100
+                }
+            ]
+        }
+    ]
+}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+```

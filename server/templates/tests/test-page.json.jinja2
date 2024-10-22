@@ -1,0 +1,16 @@
+{% extends "common/base.html.jinja2" %}
+
+{% block amis_config %}
+{
+  "type": "page",
+  {# "initApi": "/api/init", #}
+  "body": {
+    "type": "dialog",
+    "title": "欢迎",
+    "body": "页面加载完成，这是一个初始化弹窗。",
+    "trigger": {
+      "type": "onLoad"
+    }
+  }
+}
+{% endblock %}

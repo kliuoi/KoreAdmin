@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <script>
+        setTimeout(function() {
+            window.location.href = "{{ redirect_url }}";
+        }, {{ delay_seconds * 1000 }});
+    </script>
+</head>
+<body>
+    <h1>Error {{ request.status_code }}</h1>
+    <p>{{ detail }}</p>
+    <p>You will be redirected in {{ delay_seconds }} seconds...</p>
+</body>
+</html>

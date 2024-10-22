@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}FastAPI Amis Admin{% endblock %}</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <link rel="stylesheet" href="{{ url_for('static', path='sdk/amis/@6.8.0/antd.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', path='sdk/amis/@6.8.0/helper.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', path='sdk/amis/@6.8.0/iconfont.css') }}" />
+    <!-- 这是默认主题所需的，如果是其他主题则不需要 -->
+    <!-- 从 1.1.0 开始 sdk.css 将不支持 IE 11，如果要支持 IE11 请引用这个 css，并把前面那个删了 -->
+    <!-- <link rel="stylesheet" href="sdk-ie11.css" /> -->
+    <!-- 不过 amis 开发团队几乎没测试过 IE 11 下的效果，所以可能有细节功能用不了，如果发现请报 issue -->
+    <style>
+        {% block style %}
+        html,
+        body,
+        .app-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*DropDownButton组件下拉菜单样式修改*/
+        .amis-scope .cxd-DropDown-menu {
+            min-width: 100%;
+            text-align: center;
+        }
+        {% endblock %}
+    </style>
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+    <div class="app-wrapper" id="root"></div>
+    <script src="{{ url_for('static', path='sdk/amis/@6.8.0/sdk.js') }}"></script>
+    <script>
+        (function () {
+            {# 通过amisRequire方法, 从amis库导入了相关功能 #}
+            let amis = amisRequire('amis/embed');
+            const match = amisRequire('path-to-regexp').match;
+
+            // 如果想用 browserHistory 请切换下这处代码, 其他不用变
+            // const history = History.createBrowserHistory();
+            {# 使用History.createHashHistory创建了一个hash类型的历史对象, 用于管理浏览器历史和导航 #}
+            const history = History.createHashHistory();
+            //const app = { "type": "app", "brandName": "FastAPI Amis Admin", "header": { "type": "flex", "className": "w-full", "justify": "flex-end", "alignItems": "flex-end", "items": [{ "type": "tpl", "tpl": "<div class=\"flex justify-between\"><div><\/div><div><a href=\"https:\/\/github.com\/amisadmin\/fastapi_amis_admin\" target=\"_blank\" title=\"Copyright\"><i class=\"fa fa-github fa-2x\"><\/i><\/a><\/div><\/div>", "className": "w-full" }, { "type": "dropdown-button", "label": "admin", "icon": "fa fa-user", "trigger": "hover", "buttons": [{ "type": "button", "actionType": "dialog", "label": "\u7528\u6237\u4fe1\u606f", "dialog": { "type": "dialog", "body": { "type": "service", "schemaApi": { "url": "\/admin\/auth\/form\/userinfo", "method": "post", "cache": 600000, "responseData": { "&": "${body}" } } }, "size": "lg", "title": "\u7528\u6237\u4fe1\u606f", "actions": [] } }, { "type": "button", "actionType": "url", "label": "\u9000\u51fa\u767b\u5f55", "url": "\/admin\/auth\/logout" }] }] }, "footer": "<div class=\"p-2 text-center bg-light\">Copyright \u00a9 2021 - 2022  <a href=\"https:\/\/github.com\/amisadmin\/fastapi_amis_admin\" target=\"_blank\" class=\"link-secondary\">fastapi-amis-admin<\/a>. All rights reserved. <a target=\"_blank\" href=\"https:\/\/github.com\/amisadmin\/fastapi_amis_admin\" class=\"link-secondary\" rel=\"noopener\">v0.1.8<\/a><\/div> ", "pages": [{ "children": [{ "label": "Home", "icon": "fa fa-home", "url": "\/admin\/page\/home", "schemaApi": { "url": "\/admin\/page\/home", "method": "post", "data": {}, "cache": 300000 }, "isDefaultPage": "True", "sort": 100 }, { "label": "\u7528\u6237\u6388\u6743", "icon": "fa fa-lock", "url": "\/admin\/auth\/", "children": [{ "label": "\u7528\u6237\u7ba1\u7406", "icon": "fa fa-user", "url": "\/admin\/auth\/useradmin", "schemaApi": { "url": "\/admin\/auth\/useradmin", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u89d2\u8272\u7ba1\u7406", "icon": "fa fa-group", "url": "\/admin\/auth\/roleadmin", "schemaApi": { "url": "\/admin\/auth\/roleadmin", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u7528\u6237\u7ec4\u7ba1\u7406", "icon": "fa fa-group", "url": "\/admin\/auth\/groupadmin", "schemaApi": { "url": "\/admin\/auth\/groupadmin", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u6743\u9650\u7ba1\u7406", "icon": "fa fa-lock", "url": "\/admin\/auth\/permissionadmin", "schemaApi": { "url": "\/admin\/auth\/permissionadmin", "method": "post", "data": {}, "cache": 300000 } }], "sort": 99 }, { "label": "\u5b9a\u65f6\u4efb\u52a1", "icon": "fa fa-clock-o", "url": "\/admin\/jobs\/", "schemaApi": { "url": "\/admin\/jobs\/", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u535a\u5ba2\u5e94\u7528", "icon": "fa fa-wordpress", "url": "\/admin\/blog\/", "children": [{ "label": "\u5206\u7c7b\u7ba1\u7406", "icon": "fa fa-folder", "url": "\/admin\/blog\/categoryadmin", "schemaApi": { "url": "\/admin\/blog\/categoryadmin", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u6587\u7ae0\u7ba1\u7406", "icon": "fa fa-file", "url": "\/admin\/blog\/articleadmin", "schemaApi": { "url": "\/admin\/blog\/articleadmin", "method": "post", "data": {}, "cache": 300000 } }, { "label": "\u6807\u7b7e\u7ba1\u7406", "icon": "fa fa-tags", "url": "\/admin\/blog\/tagadmin", "schemaApi": { "url": "\/admin\/blog\/tagadmin", "method": "post", "data": {}, "cache": 300000 } }] }, { "label": "APIDocs", "icon": "fa fa-book", "children": [{ "label": "AdminDocs", "icon": "fa fa-book", "url": "\/admin\/docs", "schema": { "type": "iframe", "src": "\/admin\/docs" } }, { "label": "AdminRedocs", "icon": "fa fa-book", "url": "\/admin\/redoc", "schema": { "type": "iframe", "src": "\/admin\/redoc" } }], "sort": -100 }, { "label": "AmisEditorDemo", "icon": "fa fa-edit", "url": "\/\/aisuda.github.io\/amis-editor-demo\/", "schema": { "type": "iframe", "src": "https:\/\/aisuda.github.io\/amis-editor-demo\/" }, "sort": -100 }] }] };
+            const app = {% block amis_config %} {% endblock %};
+            {# 将给定的相对URL转换为绝对URL #}
+            function normalizeLink(to, location = history.location) {
+                to = to || '';
+
+                if (to && to[0] === '#') {
+                    to = location.pathname + location.search + to;
+                } else if (to && to[0] === '?') {
+                    to = location.pathname + to;
+                }
+
+                const idx = to.indexOf('?');
+                const idx2 = to.indexOf('#');
+                let pathname = ~idx ? to.substring(0, idx) : ~idx2 ? to.substring(0, idx2) : to;
+                let search = ~idx ? to.substring(idx, ~idx2 ? idx2 : undefined) : '';
+                let hash = ~idx2 ? to.substring(idx2) : location.hash;
+                if (!pathname) {
+                    pathname = location.pathname;
+                } else if (pathname[0] != '/' && !/^https?\:\/\//.test(pathname)) {
+                    let relativeBase = location.pathname;
+                    const paths = relativeBase.split('/');
+                    paths.pop();
+                    let m;
+                    while ((m = /^\.\.?\//.exec(pathname))) {
+                        if (m[0] === '../') {
+                            paths.pop();
+                        }
+                        pathname = pathname.substring(m[0].length);
+                    }
+                    pathname = paths.concat(pathname).join('/');
+                }
+                return pathname + search + hash;
+            }
+
+            {# 用于检查给定的URL是否与当前页面的URL相匹配 #}
+            function isCurrentUrl(to, ctx) {
+                if (!to) {
+                    return false;
+                }
+                const pathname = history.location.pathname;
+                const link = normalizeLink(to, {
+                    ...location,
+                    pathname,
+                    hash: ''
+                });
+
+                if (!~link.indexOf('http') && ~link.indexOf(':')) {
+                    let strict = ctx && ctx.strict;
+                    return match(link, {
+                        decode: decodeURIComponent,
+                        strict: typeof strict !== 'undefined' ? strict : true
+                    })(pathname);
+                }
+
+                return decodeURI(pathname) === link;
+            }
+
+            {# 初始化了一个amis应用 #}
+            let amisInstance = amis.embed(
+                {# 挂载点 #}
+                '#root',
+                {# 上面定义的应用配置 #}
+                app,
+                { location: history.location, locale: "zh_CN" },
+                {
+                    // watchRouteChange: fn => {
+                    //   return history.listen(fn);
+                    // },
+                    updateLocation: (location, replace) => {
+                        location = normalizeLink(location);
+                        if (location === 'goBack') {
+                            return history.goBack();
+                        } else if (
+                            (!/^https?\:\/\//.test(location) &&
+                                location ===
+                                history.location.pathname + history.location.search) ||
+                            location === history.location.href
+                        ) {
+                            // 目标地址和当前地址一样，不处理，免得重复刷新
+                            return;
+                        } else if (/^https?\:\/\//.test(location) || !history) {
+                            return (window.location.href = location);
+                        }
+
+                        history[replace ? 'replace' : 'push'](location);
+                    },
+                    jumpTo: (to, action) => {
+                        if (to === 'goBack') {
+                            return history.goBack();
+                        }
+
+                        to = normalizeLink(to);
+
+                        if (isCurrentUrl(to)) {
+                            return;
+                        }
+
+                        if (action && action.actionType === 'url') {
+                            action.blank === false
+                                ? (window.location.href = to)
+                                : window.open(to, '_blank');
+                            return;
+                        } else if (action && action.blank) {
+                            window.open(to, '_blank');
+                            return;
+                        }
+
+                        if (/^https?:\/\//.test(to)) {
+                            window.location.href = to;
+                        } else if (
+                            (!/^https?\:\/\//.test(to) &&
+                                to === history.pathname + history.location.search) ||
+                            to === history.location.href
+                        ) {
+                            // do nothing
+                        } else {
+                            history.push(to);
+                        }
+                    },
+                    isCurrentUrl: isCurrentUrl,
+                    theme: 'antd'
+                }
+            );
+            
+            {# 添加了一个监听器, 用于监听浏览器历史的变化.
+            当URL改变时, 它会更新amis应用的属性, 反映当前的位置状态 #}
+            history.listen(state => {
+                amisInstance.updateProps({
+                    location: state.location || state
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

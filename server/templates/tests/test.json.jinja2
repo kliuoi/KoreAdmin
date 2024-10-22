@@ -1,0 +1,54 @@
+
+{% extends "tests/base.html.jinja2" %}
+
+{% block amis_config %}
+{
+  "type": "page",
+  "body": {
+    "type": "layout",
+    "header": {
+      "type": "tpl",
+      "tpl": "<div><h1>管理后台</h1></div>"
+    },
+    "aside": {
+      "type": "nav",
+      "nav": [
+        {
+          "label": "首页",
+          "to": "/home",
+          "icon": "iconfont icon-home"
+        },
+        {
+          "label": "用户管理",
+          "to": "/users",
+          "icon": "iconfont icon-user"
+        },
+        {
+          "label": "订单管理",
+          "to": "/orders",
+          "icon": "iconfont icon-list"
+        },
+        {
+          "label": "商品管理",
+          "to": "/products",
+          "icon": "iconfont icon-product"
+        },
+        {
+          "label": "统计报表",
+          "to": "/reports",
+          "icon": "iconfont icon-report"
+        },
+        {
+          "label": "系统设置",
+          "to": "/settings",
+          "icon": "iconfont icon-setting"
+        }
+      ]
+    },
+    "body": {
+      "type": "tpl",
+      "tpl": "<h2>欢迎来到管理后台</h2><p>请选择左侧的菜单项以开始您的管理工作。</p>"
+    }
+  }
+}
+{% endblock %}

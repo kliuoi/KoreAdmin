@@ -1,0 +1,9 @@
+# 允许行长度为120
+line-length = 120
+
+# 以py311为目标版本
+target-version = "py311"
+
+[lint]
+# 忽略错误列表
+ignore = ["F401", "D202", "D204"]
